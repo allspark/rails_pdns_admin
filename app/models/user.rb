@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many :roles, through: :user_roles
 
   def sysadmin?
-    roles.where(shortname: Role.shortnames[:sysadmin]).count == 1
+    roles.where(title: Role.titles[:sysadmin]).count == 1
   end
 
 
