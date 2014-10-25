@@ -9,6 +9,14 @@ default: &default
   pool: 5
   timeout: 5000
 
+powerdns:
+  adapter: mysql2
+  host: 172.22.192.194
+  username: pdns_admin
+  password: 'ohci,qu5Ga8oozoa'
+  database: pdns
+
+
 development:
   <<: *default
   database: db/development.sqlite3
