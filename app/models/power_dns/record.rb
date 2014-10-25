@@ -4,7 +4,7 @@ class PowerDns::Record < PowerDns::Base
   belongs_to :domain
 
   def self.sti_name
-    self.name.split('::')[1]
+    self.name.split('::').last
   end
 
 end

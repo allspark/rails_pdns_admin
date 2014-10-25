@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users
+
+#  namespace 'power_dns' do
+  scope module: 'power_dns' do
+    resources :domains do
+      resources :records
+    end
+  end
+
   root to: 'static_page#home'
 
 

@@ -3,4 +3,11 @@ class PowerDns::Domain < PowerDns::Base
 
   has_many :records
 
+  has_many :user_role_powerdns_domains
+  has_many :users, through: :user_role_powerdns_domains
+
+  validates_presence_of :name, message: _('Please enter a name')
+
+
+  attr_accessor :user
 end

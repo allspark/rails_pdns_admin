@@ -1,0 +1,8 @@
+= form_for domain, html: { class: 'form-horizontal', role: 'form' } do |f|
+  - input_field f, :name, :text
+  - input_field f, :master, :text
+  - select_box f, :type, [ 'NATIVE', 'MASTER', 'SLAVE' ].map { |t| Struct.new(:id, :name).new(t, t) }
+  - if current_user.sysadmin?
+    - select_box f, :user, User.all
+
+  - submit_button f, :success
