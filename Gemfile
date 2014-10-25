@@ -32,6 +32,16 @@ gem 'devise'
 gem 'devise-encryptable'
 gem 'haml-rails'
 
+gem 'gettext_i18n_rails'
+
+gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
+
+group :development do
+  gem 'html2haml'
+  gem 'gettext', require: false
+end
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
