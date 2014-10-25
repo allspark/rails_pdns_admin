@@ -1,5 +1,5 @@
 - if current_user.sysadmin?
-  = link_to fa('plus-square') + _("new"), new_domain_path, class: 'btn btn-success'
+  = link_to fa_icon('plus-square') + _("new"), new_domain_path, class: 'btn btn-success'
 
 %table.table
   %thead
@@ -14,7 +14,7 @@
         %td
           = link_to domain.name, domain
           - if (domain.type != 'SLAVE')
-            = link_to fa('pencil'), edit_domain_path(domain)
+            = link_to fa_icon('pencil'), edit_domain_path(domain)
         %td= domain.records.count
         - if current_user.sysadmin?
           %td= domain.users.map { |user| user.email }.join(',')
