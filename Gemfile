@@ -34,6 +34,7 @@ gem 'haml-rails'
 
 gem 'gettext_i18n_rails'
 
+gem 'less-rails'
 gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
 
 group :development do
