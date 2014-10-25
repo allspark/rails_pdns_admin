@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 #  namespace 'power_dns' do
   scope module: 'power_dns' do
     resources :domains do
-      resources :records
+      resources :records do
+        member do
+          get 'toggle'
+        end
+      end
     end
   end
 

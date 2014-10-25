@@ -31,12 +31,14 @@ gem 'spring',        group: :development
 
 gem 'devise'
 gem 'devise-encryptable'
+gem 'declarative_authorization', github: 'stffn/declarative_authorization'
 gem 'haml-rails'
 
 gem 'gettext_i18n_rails'
 
 gem 'less-rails'
 gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
+gem 'font-awesome-rails'
 
 group :development do
   gem 'html2haml'

@@ -1,12 +1,4 @@
 module ApplicationHelper
-  def fa(icon)
-    capture_haml do
-      surround ' ', ' ' do
-        haml_tag 'span', :class => "fa fa-#{icon}"
-      end
-    end
-  end
-
   def select_box(f, attribute, data)
     input(f, attribute, :text) do
       f.collection_select(attribute, data, :id, :name, {}, :class  => 'form-control')
