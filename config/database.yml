@@ -16,10 +16,16 @@ powerdns:
   password: 'ohci,qu5Ga8oozoa'
   database: pdns
 
-
 development:
-  <<: *default
-  database: db/development.sqlite3
+  adapter: mysql2
+  host: 172.22.192.194
+  username: pdns_admin
+  password: 'ohci,qu5Ga8oozoa'
+  database: dnsadmin
+
+#development:
+  #  <<: *default
+  #  database: db/development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

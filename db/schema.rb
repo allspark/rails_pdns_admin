@@ -11,16 +11,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141025153103) do
+ActiveRecord::Schema.define(version: 20141025174403) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
+    t.string   "shortname"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name"], name: "index_roles_on_name", unique: true
+  add_index "roles", ["shortname"], name: "index_roles_on_shortname", unique: true
+
+  create_table "user_role_powerdns_domains", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.integer  "domain_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_role_powerdns_domains", ["user_id", "role_id", "domain_id"], name: "userroledomain_idx", unique: true
+
+  create_table "user_role_powerdns_records", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.integer  "record_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_role_powerdns_records", ["user_id", "role_id", "record_id"], name: "userrecord_index", unique: true
+
+  create_table "user_roles", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_roles", ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
