@@ -1,5 +1,6 @@
 class PowerDns::RecordsController < ApplicationController
   before_action :load_domain
+  before_action :load_record, only: [ :edit, :update, :destroy, :toggle ]
   authorize_resource
   include RecordsHelper
 
@@ -18,17 +19,35 @@ class PowerDns::RecordsController < ApplicationController
     @record = @domain.records.build args
   end
 
+  def create
+  end
+
   def edit
     @record = @domain.records.find params[:id]
   end
 
+
+  def toggle
+    @record.toggle(:disabled)
+    @record.save
+
+    redirect_to action: :index and return
+  end
+
   private
   def load_domain
-    if can?(:manage, :dns)
-      @domain = PowerDns::Domain.find params[:domain_id]
-    else
-      @domain = current_user.user_role_powerdns_domains.find_by(domain_id: params[:domain_id]).domain
-    end
+    @domain = if can?(:manage, :dns)
+                PowerDns::Domain.find params[:domain_id]
+              else
+                current_user.user_role_powerdns_domains.find_by(domain_id: params[:domain_id]).domain
+              end
+
     authorize!(:manage, @domain)
+  end
+
+  def load_record
+    @record = @domain.records.find params[:id]
+
+    authorize!(:manage, @record)
   end
 end

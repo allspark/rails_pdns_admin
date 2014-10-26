@@ -1,5 +1,5 @@
 = form_for [domain, record], as: :record, url: { controller: :records }, html: { class: 'form-horizontal', role: 'form' } do |f|
-  - input_field f, :name, :text
+  - input_field_2 f, :name, :domain, domain.name, :text
   - if record.type != 'Record'
     - input_field f, :type, :text, readonly: :readonly
   - else
