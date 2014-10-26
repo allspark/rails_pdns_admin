@@ -6,15 +6,15 @@
     %tr
       %th Domain
       %th Records
-      - if current_user.sysadmin?
+      - if can?(:manage, :dns)
         %th Owner
   %tbody
-    - @domains.each do |domain|
+    - @Domains.each do |domain|
       %tr
         %td
           = link_to domain.name, domain
-          - if (domain.type != 'SLAVE')
+          - if (domain.type != 'SLAVE') && can?(:edit, domain)
             = link_to fa_icon('pencil'), edit_domain_path(domain)
         %td= domain.records.count
-        - if current_user.sysadmin?
+        - if can?(:manage, :dns)
           %td= domain.users.map { |user| user.email }.join(',')

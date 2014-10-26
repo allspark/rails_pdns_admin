@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
-
   before_filter :set_gettext_locale
+
+  check_authorization :unless => :devise_controller?
 end

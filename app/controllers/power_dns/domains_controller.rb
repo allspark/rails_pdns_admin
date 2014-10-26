@@ -1,11 +1,13 @@
 class PowerDns::DomainsController < ApplicationController
-
+  load_and_authorize_resource
   def index
-    @domains = if current_user.sysadmin?
+    @Domains = if can?(:manage, :dns)
                  PowerDns::Domain.all
                else
                  current_user.user_role_powerdns_domains.map(&:domain)
                end
+
+    #@Domains = PowerDns::Domain.accessible_by(current_ability, :manage)
   end
 
   def new

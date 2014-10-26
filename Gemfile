@@ -31,7 +31,8 @@ gem 'spring',        group: :development
 
 gem 'devise'
 gem 'devise-encryptable'
-gem 'declarative_authorization', github: 'stffn/declarative_authorization'
+#gem 'declarative_authorization', github: 'stffn/declarative_authorization'
+gem 'cancan'
 gem 'haml-rails'
 
 gem 'gettext_i18n_rails'
