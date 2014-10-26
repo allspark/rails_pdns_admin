@@ -1,8 +1,15 @@
 class PowerDns::RecordsController < ApplicationController
   before_action :load_domain
   authorize_resource
+  include RecordsHelper
 
   def index
+    @main_record_types = record_types.select do |t|
+      ['a', 'aaaa', 'cname', 'ptr'].include?(t.id)
+    end
+
+    @other_record_types = record_types - @main_record_types
+
     @records = @domain.records
   end
 

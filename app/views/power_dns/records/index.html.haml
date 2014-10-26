@@ -1,8 +1,15 @@
 
 %h1= @domain.name
 
-= link_to fa_icon('plus-square') + _('new'), new_domain_record_path(@domain), class: 'btn btn-success'
-= link_to fa_icon('plus-square') + _('new A'), new_domain_records_path(@domain, 'a'), class: 'btn btn-success'
+.btn-group
+  %button.btn.btn-success= fa('plus-square') + _('new')
+  %button.btn.btn-success.dropdown-toggle{'data-toggle' => :dropdown}= fa('caret-down')
+  %ul.dropdown-menu{role: :menu}
+    - @other_record_types.each do |rt|
+      %li= link_to _('%{type}') % {type: rt.name}, new_domain_records_path(@domain, rt.id)
+
+- @main_record_types.each do |rt|
+  = link_to fa('plus-square') + _('new %{type}') % {type: rt.name}, new_domain_records_path(@domain, rt.id), class: 'btn btn-success'
 
 %table.table
   %thead
