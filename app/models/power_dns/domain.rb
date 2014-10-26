@@ -2,6 +2,7 @@ class PowerDns::Domain < PowerDns::Base
   self.inheritance_column = nil
 
   has_many :records
+  has_one :soa, class_name: :SOA
 
   has_many :user_role_powerdns_domains
 #  has_many :users, through: :user_role_powerdns_domains
