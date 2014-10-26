@@ -5,6 +5,12 @@ module ApplicationHelper
     end
   end
 
+  def input_check_box(f, attribute, selected)
+    input(f, attribute, :text) do
+      f.check_box(attribute)
+    end
+  end
+
   def default_form_class()
     { label: 'col-lg-2', input: 'col-lg-10', submit: 'col-lg-offset-2 col-lg-10' }
   end
@@ -54,7 +60,7 @@ module ApplicationHelper
     end
   end
 
-  def input_field(f, attribute, type, options = {})
+  def input_field(f, attribute, type = :text, options = {})
     input(f, attribute, type, options) do |opts|
       f.text_field(attribute, { :class  => 'form-control', type: type}.merge(opts))
     end

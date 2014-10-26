@@ -3,13 +3,16 @@ class PowerDns::RecordsController < ApplicationController
   authorize_resource
 
   def index
-    puts instance_variables
     @records = @domain.records
   end
 
   def new
-    @record = @domain.records.build
-    @record.type = params[:type]
+    args = { type: "PowerDns::#{params[:type].upcase}" } if params[:type].present?
+    @record = @domain.records.build args
+  end
+
+  def edit
+    @record = @domain.records.find params[:id]
   end
 
   private

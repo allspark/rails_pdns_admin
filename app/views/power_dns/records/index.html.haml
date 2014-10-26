@@ -1,7 +1,8 @@
 
 %h1= @domain.name
 
-= link_to fa_icon('plus-square') + _("new"), new_domain_record_path(@domain), class: 'btn btn-success'
+= link_to fa_icon('plus-square') + _('new'), new_domain_record_path(@domain), class: 'btn btn-success'
+= link_to fa_icon('plus-square') + _('new A'), new_domain_records_path(@domain, 'a'), class: 'btn btn-success'
 
 %table.table
   %thead
@@ -17,7 +18,10 @@
       %tr
         %td
           = record.name
-
+          - if can?(:edit, record)
+            = link_to fa_icon('pencil'), edit_domain_record_path(@domain, record)
+          - if can?(:delete, record)
+            = link_to fa_icon('remove'), domain_record_path(@domain, record), method: :delete, data: { confirm: _("Are you sure?") }
         %td= record.type
         %td= record.content
         %td= record.ttl

@@ -1,3 +1,19 @@
+class PowerDns::RecordTypesContraint
+
+  def initialize
+    Rails.application.eager_load!
+    @types = PowerDns::Record.descendants.map do |subclass|
+      subclass.model_name.name.downcase
+    end
+  end
+
+  def matches?(r)
+    type = r.path_parameters[:type].downcase
+    @types.include?(type)
+  end
+
+end
+
 Rails.application.routes.draw do
   devise_for :users
 
@@ -9,9 +25,11 @@ Rails.application.routes.draw do
           get 'toggle'
         end # member
 
-        resource :a, controller: :records, type: :A
-
+        collection do
+          get 'new/:type', action: :new, constraints: PowerDns::RecordTypesContraint.new, as: :new
+        end
       end # records
+
     end #domains
   end
 

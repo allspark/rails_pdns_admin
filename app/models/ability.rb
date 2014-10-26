@@ -55,6 +55,7 @@ class Ability
     can_view_domains
 
     can :manage, PowerDns::Domain
+    can :manage, PowerDns::Record
   end
 
   def can_view_domains
@@ -66,6 +67,8 @@ class Ability
       domain.user_role_powerdns_domains.where(user: @user, role: Role.find_by(title: Role.titles[:domainown])).present?
     end
 
-    can :manage, PowerDns::Record
+    can :manage, PowerDns::Record do |record|
+      can :manage, record if can?(:manage, record.domain)
+    end
   end
 end

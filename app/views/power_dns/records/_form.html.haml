@@ -1,3 +1,14 @@
-= form_for [@domain, record], html: { class: 'form-horizontal', role: 'form' } do |f|
+= form_for [domain, record], as: :record, url: { controller: :records }, html: { class: 'form-horizontal', role: 'form' } do |f|
   - input_field f, :name, :text
-  - input_field f, :type, :text, readonly: :readonly
+  - if record.type != 'Record'
+    - input_field f, :type, :text, readonly: :readonly
+  - else
+    - select_box f, :type, record_types
+  - input_field f, :ttl
+  - input_field f, :prio
+  - input_check_box f, :disabled, false
+  - if record.type != 'Record'
+    = render "form_#{record.type}", f: f
+  - else
+    - input_field f, :content
+  - submit_button f, :success
