@@ -34,25 +34,23 @@ class PowerDns::Record < PowerDns::Base
     @attributes
   end
 
-  #def type
-  #  read_attribute(:type).capitalize
-  #end
-
-
-
-#  private
+  private
   def validate_name
     self.name = if self.name.blank?
              self.domain.name
            elsif !self.name.ends_with?(self.domain.name)
              "#{self.name}.#{self.domain.name}"
+           else
+             self.name
            end
   end
 
   def update_soa
     soa = domain.soa
-    soa.update_serial
-    soa.save
+    if soa != self
+      soa.update_serial
+      soa.save
+    end
   end
 
 end
