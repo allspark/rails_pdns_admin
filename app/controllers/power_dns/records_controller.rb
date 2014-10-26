@@ -21,7 +21,6 @@ class PowerDns::RecordsController < ApplicationController
 
   def create
     p = safe_params
-    pp p
     p[:type] = "PowerDns::#{p[:type]}"
     @record = @domain.records.build p
 
