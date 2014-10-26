@@ -40,6 +40,20 @@ class PowerDns::RecordsController < ApplicationController
     @record = @domain.records.find params[:id]
   end
 
+  def update
+    @record = @domain.records.find params[:id]
+
+    if @record.update_attributes safe_params
+      flash[:success] = _('record updated')
+
+      redirect_to action: :index and return
+    else
+      flash[:error] = _('record not updated')
+
+      render :edit
+    end
+  end
+
 
   def toggle
     @record.toggle(:disabled)
@@ -51,7 +65,7 @@ class PowerDns::RecordsController < ApplicationController
   private
   def safe_params
     record_base_params = [ :name, :ttl, :prio, :disabled, :type ]
-    record_typename = "PowerDns::#{params[:type].upcase}"
+    record_typename = "PowerDns::#{@record.present? ? @record.type : params[:type].upcase}"
     attributes = if Object.const_defined?(record_typename)
                    record_typename.constantize.attributes
                  else
