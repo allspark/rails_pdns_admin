@@ -7,9 +7,12 @@ Rails.application.routes.draw do
       resources :records do
         member do
           get 'toggle'
-        end
-      end
-    end
+        end # member
+
+        resource :a, controller: :records, type: :A
+
+      end # records
+    end #domains
   end
 
   root to: 'static_page#home'

@@ -63,7 +63,10 @@ class Ability
 
   def can_manage_own_domains
     can :manage, PowerDns::Domain do |domain|
+      puts "can manage own domains"
       domain.user_role_powerdns_domains.where(user: @user, role: Role.find_by(title: Role.titles[:domainown])).present?
     end
+
+    can :manage, PowerDns::Record
   end
 end

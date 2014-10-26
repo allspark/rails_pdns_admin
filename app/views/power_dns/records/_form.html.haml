@@ -1,0 +1,3 @@
+= form_for [@domain, record], html: { class: 'form-horizontal', role: 'form' } do |f|
+  - input_field f, :name, :text
+  - input_field f, :type, :text, readonly: :readonly

@@ -1,0 +1,31 @@
+
+%h1= @domain.name
+
+= link_to fa_icon('plus-square') + _("new"), new_domain_record_path(@domain), class: 'btn btn-success'
+
+%table.table
+  %thead
+    %tr
+      %th= _('Name')
+      %th= _('Type')
+      %th= _('Content')
+      %th= _('TTL')
+      %th= _('Prio')
+      %th= _('Status')
+  %tbody
+    - @records.each do |record|
+      %tr
+        %td
+          = record.name
+
+        %td= record.type
+        %td= record.content
+        %td= record.ttl
+        %td= record.prio
+        %td
+          - if record.disabled
+            = _('disabled')
+            = link_to fa_icon('toggle-on'), toggle_domain_record_path(@domain, record)
+          - else
+            = _('enabled')
+            = link_to fa_icon('toggle-off'), toggle_domain_record_path(@domain, record)
