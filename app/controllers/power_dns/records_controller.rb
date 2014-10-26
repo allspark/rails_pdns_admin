@@ -20,6 +20,20 @@ class PowerDns::RecordsController < ApplicationController
   end
 
   def create
+    p = safe_params
+    pp p
+    p[:type] = "PowerDns::#{p[:type]}"
+    @record = @domain.records.build p
+
+    if @record.save
+      flash[:success] = _('record created')
+
+      redirect_to action: :index and return
+    else
+      flash[:error] = _('unable to create record')
+
+      render :new
+    end
   end
 
   def edit
@@ -35,6 +49,18 @@ class PowerDns::RecordsController < ApplicationController
   end
 
   private
+  def safe_params
+    record_base_params = [ :name, :ttl, :prio, :disabled, :type ]
+    record_typename = "PowerDns::#{params[:type].upcase}"
+    attributes = if Object.const_defined?(record_typename)
+                   record_typename.constantize.attributes
+                 else
+                   []
+                 end
+
+    params.require(:record).permit(record_base_params.concat(attributes))
+  end
+
   def load_domain
     @domain = if can?(:manage, :dns)
                 PowerDns::Domain.find params[:domain_id]

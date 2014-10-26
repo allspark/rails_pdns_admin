@@ -1,2 +1,3 @@
 
-= render 'form', record: @record, domain: @domain
+= form_for [@domain, @record], as: :record, url: create_domain_records_path(@domain, params[:type]), html: { class: 'form-horizontal', role: 'form' } do |f|
+  = render 'form', record: @record, domain: @domain, f: f

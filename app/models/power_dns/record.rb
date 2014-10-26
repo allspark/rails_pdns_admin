@@ -3,7 +3,7 @@ class PowerDns::Record < PowerDns::Base
 
   belongs_to :domain
 
-#  before_save :filter_type
+  before_save :validate_name
 
   def initialize(args)
     super
@@ -14,10 +14,30 @@ class PowerDns::Record < PowerDns::Base
     self.name.split('::').last
   end
 
+  def self.has_attributes(*args)
+    @attributes ||= Array.new
+    args.each do |arg|
+      if arg.instance_of? Symbol
+        @attributes.append arg
+        attr_accessor arg
+      elsif arg.instance_of? Hash
+        arg.each do |n, a|
+          @attributes.append n
+          alias_attribute n, a
+        end
+      end
+    end
+  end
 
-#  private
-#  def filter_type
-#    self.type = self.type.split('::').last
-#  end
+  def self.attributes
+    @attributes
+  end
+
+
+
+  private
+  def validate_name
+    self.name = "#{self.name}.#{domain.name}" unless self.name.ends_with?(domain.name)
+  end
 
 end

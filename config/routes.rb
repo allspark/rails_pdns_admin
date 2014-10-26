@@ -1,4 +1,4 @@
-class PowerDns::RecordTypesContraint
+class PowerDns::RecordTypesConstraint
 
   def initialize
     Rails.application.eager_load!
@@ -26,7 +26,8 @@ Rails.application.routes.draw do
         end # member
 
         collection do
-          get 'new/:type', action: :new, constraints: PowerDns::RecordTypesContraint.new, as: :new
+          get 'new/:type', action: :new, constraints: PowerDns::RecordTypesConstraint.new, as: :new
+          post ':type', action: :create, constraints: PowerDns::RecordTypesConstraint.new, as: :create
         end
       end # records
 

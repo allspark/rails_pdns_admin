@@ -36,6 +36,7 @@ gem 'cancan'
 gem 'haml-rails'
 
 gem 'gettext_i18n_rails'
+gem 'chronic_duration'
 
 gem 'less-rails'
 gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
