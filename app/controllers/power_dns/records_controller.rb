@@ -36,12 +36,9 @@ class PowerDns::RecordsController < ApplicationController
   end
 
   def edit
-    @record = @domain.records.find params[:id]
   end
 
   def update
-    @record = @domain.records.find params[:id]
-
     if @record.update_attributes safe_params
       flash[:success] = _('record updated')
 
@@ -54,24 +51,32 @@ class PowerDns::RecordsController < ApplicationController
   end
 
 
+  def destroy
+    if @record.delete
+      flash[:success] = _('record deleted')
+    else
+      flash[:error] = _('record not deleted')
+    end
+
+    redirect_to action: :index and return
+  end
+
   def toggle
-    @record.toggle(:disabled)
-    @record.save
+    new_state = @record.toggle(:disabled).disabled? ? _('disabled') : _('enabled')
+
+    if @record.save
+      flash[:success] = _('record %{s}') % { s: new_state }
+    end
 
     redirect_to action: :index and return
   end
 
   private
   def safe_params
-    record_base_params = [ :name, :ttl, :prio, :disabled, :type ]
     record_typename = "PowerDns::#{@record.present? ? @record.type : params[:type].upcase}"
-    attributes = if Object.const_defined?(record_typename)
-                   record_typename.constantize.attributes
-                 else
-                   []
-                 end
+    attributes = record_typename.constantize.attributes
 
-    params.require(:record).permit(record_base_params.concat(attributes))
+    params.require(:record).permit(attributes)
   end
 
   def load_domain

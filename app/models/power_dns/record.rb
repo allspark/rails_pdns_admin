@@ -6,7 +6,7 @@ class PowerDns::Record < PowerDns::Base
   before_save :validate_name
   before_save :update_soa
 
-  def initialize(args)
+  def initialize(attributes = nil, options = {})
     super
     self.type = self.class.sti_name
   end
@@ -30,8 +30,12 @@ class PowerDns::Record < PowerDns::Base
     end
   end
 
-  def self.attributes
-    @attributes
+  def self.attributes(all = true)
+    if all
+      [ :name, :ttl, :prio, :disabled, :type, :content ].concat((@attributes or []))
+    else
+      @attributes or []
+    end
   end
 
   private

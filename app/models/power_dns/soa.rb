@@ -5,7 +5,7 @@ class PowerDns::SOA < PowerDns::Record
   after_find :parse_content
   before_save :prepare_content
 
-  def initialize(args)
+  def initialize(attributes = nil, options = {})
     super
 
     self.serial ||= "#{Date.today.to_s(:number)}01"
@@ -44,7 +44,7 @@ class PowerDns::SOA < PowerDns::Record
   end
 
   def update_serial
-    self.serial = if self.serial.starts_with?(Date.today.to_s(:number))
+    self.serial = if self.serial.present? && self.serial.starts_with?(Date.today.to_s(:number))
                     self.serial.succ
                   else
                     "#{Date.today.to_s(:number)}01"
@@ -65,7 +65,7 @@ class PowerDns::SOA < PowerDns::Record
   end
 
   def parse_content
-    Hash[self.class.attributes.zip(self.content.split(' '))].each do |name, value|
+    Hash[self.class.attributes(false).zip(self.content.split(' '))].each do |name, value|
       self.send("#{name}=", value)
     end
   end

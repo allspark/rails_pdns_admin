@@ -1,5 +1,8 @@
 class PowerDns::DomainsController < ApplicationController
   authorize_resource
+
+  before_action :load_domain, only: [ :edit, :update, :destroy ]
+
   def index
     @Domains = if can?(:manage, :dns)
                  PowerDns::Domain.all
@@ -12,6 +15,9 @@ class PowerDns::DomainsController < ApplicationController
     @domain = PowerDns::Domain.new
     urd = @domain.user_role_powerdns_domains.build
     urd.user = current_user
+
+    @domain.soa = PowerDns::SOA.new
+    2.times { @domain.nameservers.build }
   end
 
   def create
@@ -35,13 +41,26 @@ class PowerDns::DomainsController < ApplicationController
   end
 
   def edit
-    @domain = PowerDns::Domain.find params[:id]
+  end
 
+
+  def destroy
+    if @domain.destroy
+      flash[:success] = _('domain deleted')
+    else
+      flash[:error] = _('domain could not be deleted')
+    end
+
+    redirect_to action: :index and return
   end
 
 
   private
   def safe_params
-    params.require(:domain).permit(:name, :master, :type)
+    params.require(:domain).permit(:name, :master, :type, soa_attributes: PowerDns::SOA.attributes, nameservers_attributes: PowerDns::NS.attributes)
+  end
+
+  def load_domain
+    @domain = PowerDns::Domain.find params[:id]
   end
 end

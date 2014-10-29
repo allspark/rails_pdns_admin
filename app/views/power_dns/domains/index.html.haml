@@ -16,6 +16,8 @@
           - if (domain.type != 'SLAVE') && can?(:edit, domain)
             = link_to fa_icon('pencil'), edit_domain_path(domain)
             = link_to fa_icon('folder-open-o'), domain_records_path(domain)
+            - if can?(:delete, domain)
+              = link_to fa_icon('remove'), domain_path(domain), method: :delete, data: { confirm: _("Are you sure?") }
         %td= domain.records.count
         - if can?(:manage, :dns)
           %td= domain.users.map { |user| user.email }.join(',')

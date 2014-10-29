@@ -4,5 +4,9 @@
   - select_box f, :type, [ 'NATIVE', 'MASTER', 'SLAVE' ].map { |t| Struct.new(:id, :name).new(t, t) }
   - if current_user.sysadmin?
     - select_box f, :user, User.all
+  = f.fields_for :soa do |soa_form|
+    = render 'power_dns/records/form_SOA', f: soa_form
+  = f.fields_for :nameservers do |ns_form|
+    - input_field ns_form, :content
 
   - submit_button f, :success
