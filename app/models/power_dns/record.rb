@@ -47,7 +47,7 @@ class PowerDns::Record < PowerDns::Base
 
   def update_soa
     soa = domain.soa
-    if soa != self
+    if soa.present? && soa != self
       soa.update_serial
       soa.save
     end
