@@ -6,7 +6,7 @@
 - input_field f, :ttl
 - input_field f, :prio
 - input_check_box f, :disabled, false
-- if record.type != 'Record'
+- if record.type != 'Record' && lookup_context.exists?("form_#{record.type}", lookup_context.prefixes, true)
   = render "form_#{record.type}", f: f
 - else
   - input_field f, :content
