@@ -1,5 +1,5 @@
 - if current_user.sysadmin?
-  = link_to fa_icon('plus-square') + _("new"), new_domain_path, class: 'btn btn-success'
+  = link_to fa('plus-square') + _("new"), new_domain_path, class: 'btn btn-success'
 
 %table.table
   %thead
@@ -14,10 +14,10 @@
         %td
           = link_to domain.name, domain
           - if (domain.type != 'SLAVE') && can?(:edit, domain)
-            = link_to fa_icon('pencil'), edit_domain_path(domain)
-            = link_to fa_icon('folder-open-o'), domain_records_path(domain)
+            = link_to fa('pencil'), edit_domain_path(domain)
+            = link_to fa('folder-open-o'), domain_records_path(domain)
             - if can?(:delete, domain)
-              = link_to fa_icon('remove'), domain_path(domain), method: :delete, data: { confirm: _("Are you sure?") }
+              = link_to fa('remove'), domain_path(domain), method: :delete, data: { confirm: _("Are you sure?") }
         %td= domain.records.count
         - if can?(:manage, :dns)
           %td= domain.users.map { |user| user.email }.join(',')
