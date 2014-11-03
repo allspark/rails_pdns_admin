@@ -12,15 +12,15 @@ default: &default
 powerdns:
   adapter: mysql2
   host: localhost
-  username: pdns_admin
-  password: 'ohci,qu5Ga8oozoa'
+  username: dnsadmin
+  password: 'oak9au.qui9gaMoz'
   database: pdns
 
 development:
   adapter: mysql2
   host: localhost
-  username: pdns_admin
-  password: 'ohci,qu5Ga8oozoa'
+  username: dnsadmin
+  password: 'oak9au.qui9gaMoz'
   database: dnsadmin
 
 #development:
