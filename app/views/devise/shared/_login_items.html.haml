@@ -1,0 +1,4 @@
+- if user_signed_in?
+  = menu_item _('Logout'), destroy_user_session_path, :method => :delete
+- else
+  = menu_item _('Login'), new_user_session_path
