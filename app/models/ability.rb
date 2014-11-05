@@ -32,21 +32,22 @@ class Ability
 
     if user
       can :manage, :staticpage
+
+      if user.roles.find_by(title: Role.titles[:dnsadmin]).present?
+       can_manage_dns
+      end
+
+      if user.roles.find_by(title: Role.titles[:sysadmin]).present?
+        can_manage_dns
+      end
+
+      if user.roles.find_by(title: Role.titles[:user]).present?
+        can_view_domains
+        can_manage_own_domains
+
+      end
     end
 
-    if user.roles.find_by(title: Role.titles[:dnsadmin]).present?
-      can_manage_dns
-    end
-
-    if user.roles.find_by(title: Role.titles[:sysadmin]).present?
-      can_manage_dns
-    end
-
-    if user.roles.find_by(title: Role.titles[:user]).present?
-      can_view_domains
-      can_manage_own_domains
-
-    end
   end
 
   def can_manage_dns

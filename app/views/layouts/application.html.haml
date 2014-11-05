@@ -9,8 +9,12 @@
     = nav_bar fixed: 'static' do
       = menu_group do
         = menu_item _('Home'), root_path
-        = menu_item _('Domains'), domains_path
-        = menu_item _('Tokens'), '#'
+        - if can?(:index, PowerDns::Domain)
+          = menu_item _('Domains'), domains_path
+        - if can?(:index, :token)
+          = menu_item _('Tokens'), '#'
+      = menu_group pull: :right do
+        = render 'devise/shared/login_items'
 
     .container-fluid
       = bootstrap_flash
