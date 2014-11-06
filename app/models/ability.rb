@@ -31,7 +31,7 @@ class Ability
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
     if user
-      can :manage, :staticpage
+      can :index, :staticpage
 
       if user.roles.find_by(title: Role.titles[:dnsadmin]).present?
        can_manage_dns

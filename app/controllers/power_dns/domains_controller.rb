@@ -1,10 +1,10 @@
 class PowerDns::DomainsController < ApplicationController
-  authorize_resource
 
   before_action :load_domain, only: [ :edit, :update, :destroy ]
+  authorize_resource
 
   def index
-    @Domains = if can?(:manage, :dns)
+    @domain = if can?(:manage, :dns)
                  PowerDns::Domain.all
                else
                  current_user.user_role_powerdns_domains.map(&:domain)

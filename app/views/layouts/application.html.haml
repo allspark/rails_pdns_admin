@@ -13,6 +13,8 @@
           = menu_item _('Domains'), domains_path
         - if can?(:index, :token)
           = menu_item _('Tokens'), '#'
+        - if can?(:index, PowerDns::Record)
+          = menu_item _('Records'), '#'
       = menu_group pull: :right do
         = render 'devise/shared/login_items'
 
