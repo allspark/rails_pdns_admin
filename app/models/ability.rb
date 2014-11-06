@@ -40,13 +40,14 @@ class Ability
       if user.roles.find_by(title: Role.titles[:sysadmin]).present?
         can_manage_dns
 
-	can :manage, :all
+        can :manage, :all
       end
 
       if user.roles.find_by(title: Role.titles[:user]).present?
         can_view_domains
         can_manage_own_domains
 
+        can_manage_own_records
       end
     end
 
@@ -63,6 +64,12 @@ class Ability
 
   def can_view_domains
     can :index, PowerDns::Domain
+  end
+
+  def can_manage_own_records
+    can :manage, PowerDns::Record do |record|
+      record.user_role_powerdns_records.where(user: @user, role: Role.find_by(title: Role.titles[:owner])).present?
+    end
   end
 
   def can_manage_own_domains

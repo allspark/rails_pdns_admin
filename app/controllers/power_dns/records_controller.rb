@@ -1,6 +1,7 @@
 class PowerDns::RecordsController < ApplicationController
-  before_action :load_domain
+  before_action :load_domain, only: [ :index, :new, :create ]
   before_action :load_record, only: [ :edit, :update, :destroy, :toggle ]
+  before_action :scoped_records, only: [ :index ]
   authorize_resource
   include RecordsHelper
 
@@ -10,8 +11,7 @@ class PowerDns::RecordsController < ApplicationController
     end
 
     @other_record_types = record_types - @main_record_types
-
-    @records = @domain.records
+    #@records = @domain.records
   end
 
   def new
@@ -90,15 +90,19 @@ class PowerDns::RecordsController < ApplicationController
     @domain = if can?(:manage, :dns)
                 PowerDns::Domain.find params[:domain_id]
               else
-                current_user.user_role_powerdns_domains.find_by(domain_id: params[:domain_id]).domain
+                current_user.user_role_powerdns_domains.find_by(domain_id: params[:domain_id]).domain if params[:domain_id]
               end
 
-    authorize!(:manage, @domain)
+    authorize!(:manage, @domain) if @domain
+  end
+
+  def scoped_records
+    @records = @domain ? @domain.records : current_user.user_role_powerdns_records.map { |urr| urr.record }
   end
 
   def load_record
-    @record = @domain.records.find params[:id]
+    @record = PowerDns::Record.find params[:id]
 
-    authorize!(:manage, @record)
+#    authorize!(:manage, @record)
   end
 end

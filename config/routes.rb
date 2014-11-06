@@ -20,11 +20,7 @@ Rails.application.routes.draw do
 #  namespace 'power_dns' do
   scope module: 'power_dns' do
     resources :domains do
-      resources :records do
-        member do
-          get 'toggle'
-        end # member
-
+      resources :records, only: [ :new, :create, :index ] do
         collection do
           get 'new/:type', action: :new, constraints: PowerDns::RecordTypesConstraint.new, as: :new
           post ':type', action: :create, constraints: PowerDns::RecordTypesConstraint.new, as: :create
@@ -32,6 +28,12 @@ Rails.application.routes.draw do
       end # records
 
     end #domains
+
+    resources :records, only: [ :edit, :update, :destroy, :show, :index ] do
+      member do
+        get 'toggle'
+      end # member
+    end
   end
 
   root to: 'static_page#home'

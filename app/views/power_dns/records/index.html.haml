@@ -1,15 +1,16 @@
 
-%h1= @domain.name
+- if @domain
+  %h1= @domain.name
 
-.btn-group
-  %button.btn.btn-success= fa('plus-square') + _('new')
-  %button.btn.btn-success.dropdown-toggle{'data-toggle' => :dropdown}= fa('caret-down')
-  %ul.dropdown-menu{role: :menu}
-    - @other_record_types.each do |rt|
-      %li= link_to _('%{type}') % {type: rt.name}, new_domain_records_path(@domain, rt.id)
+  .btn-group
+    %button.btn.btn-success= fa('plus-square') + _('new')
+    %button.btn.btn-success.dropdown-toggle{'data-toggle' => :dropdown}= fa('caret-down')
+    %ul.dropdown-menu{role: :menu}
+      - @other_record_types.each do |rt|
+        %li= link_to _('%{type}') % {type: rt.name}, new_domain_records_path(@domain, rt.id)
 
-- @main_record_types.each do |rt|
-  = link_to fa('plus-square') + _('new %{type}') % {type: rt.name}, new_domain_records_path(@domain, rt.id), class: 'btn btn-success'
+  - @main_record_types.each do |rt|
+    = link_to fa('plus-square') + _('new %{type}') % {type: rt.name}, new_domain_records_path(@domain, rt.id), class: 'btn btn-success'
 
 %table.table
   %thead
@@ -26,9 +27,9 @@
         %td
           = record.name
           - if can?(:edit, record)
-            = link_to fa_icon('pencil'), edit_domain_record_path(@domain, record)
+            = link_to fa_icon('pencil'), edit_record_path(record)
           - if can?(:delete, record)
-            = link_to fa_icon('remove'), domain_record_path(@domain, record), method: :delete, data: { confirm: _("Are you sure?") }
+            = link_to fa_icon('remove'), record_path(record), method: :delete, data: { confirm: _("Are you sure?") }
         %td= record.type
         %td= record.content
         %td= record.ttl
@@ -36,7 +37,7 @@
         %td
           - if record.disabled
             = _('disabled')
-            = link_to fa_icon('toggle-on'), toggle_domain_record_path(@domain, record)
+            = link_to fa_icon('toggle-on'), toggle_record_path(record)
           - else
             = _('enabled')
-            = link_to fa_icon('toggle-off'), toggle_domain_record_path(@domain, record)
+            = link_to fa_icon('toggle-off'), toggle_record_path(record)
