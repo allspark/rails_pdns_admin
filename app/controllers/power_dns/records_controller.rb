@@ -52,7 +52,7 @@ class PowerDns::RecordsController < ApplicationController
 
 
   def destroy
-    if @record.delete
+    if @record.destroy
       flash[:success] = _('record deleted')
     else
       flash[:error] = _('record not deleted')
