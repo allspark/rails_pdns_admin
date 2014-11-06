@@ -24,6 +24,13 @@ class PowerDns::RecordsController < ApplicationController
     p[:type] = "PowerDns::#{p[:type]}"
     @record = @domain.records.build p
 
+    @user = User.find params[:record][:user]
+    if @user
+      urr = @record.user_role_powerdns_records.build
+      urr.user = @user
+      urr.role = Role.find_by title: Role.titles[:owner]
+    end
+
     if @record.save
       flash[:success] = _('record created')
 

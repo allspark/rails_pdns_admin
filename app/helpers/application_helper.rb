@@ -7,9 +7,9 @@ module ApplicationHelper
      end
   end
 
-  def select_box(f, attribute, data)
+  def select_box(f, attribute, data, options = {})
     input f, attribute, :text, {}, proc {
-      f.collection_select(attribute, data, :id, :name, {}, :class  => 'form-control')
+      f.collection_select(attribute, data, :id, :name, options, :class  => 'form-control')
     }
   end
 

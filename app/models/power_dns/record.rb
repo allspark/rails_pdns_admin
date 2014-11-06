@@ -7,6 +7,10 @@ class PowerDns::Record < PowerDns::Base
   before_save :update_soa
   before_destroy :update_soa
 
+  has_many :user_role_powerdns_records, dependent: :destroy
+
+  attr_accessor :user
+
   def initialize(attributes = nil, options = {})
     super
     self.type = self.class.sti_name

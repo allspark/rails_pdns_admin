@@ -27,7 +27,7 @@ class PowerDns::DomainsController < ApplicationController
 
     urd = @domain.user_role_powerdns_domains.build
     urd.user = @user
-    urd.role = Role.find_by title: Role.titles[:domainown]
+    urd.role = Role.find_by title: Role.titles[:owner]
 
     if @domain.save
       flash[:success] = _('domain created')
