@@ -5,6 +5,7 @@ class PowerDns::Record < PowerDns::Base
 
   before_save :validate_name
   before_save :update_soa
+  before_destroy :update_soa
 
   def initialize(attributes = nil, options = {})
     super
