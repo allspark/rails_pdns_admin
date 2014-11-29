@@ -76,6 +76,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'admin.dev.wormhole.eu' }
+  config.action_mailer.default_url_options = { host: 'ns01.wormhole.eu' }
   config.action_mailer.smtp_settings = { enable_starttls_auto: false }
 end

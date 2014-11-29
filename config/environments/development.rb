@@ -37,5 +37,7 @@ Rails.application.configure do
 
 
   # TODO: production
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'ns01.wormhole.eu' }
+  config.action_mailer.smtp_settings = { enable_starttls_auto: false }
 end

@@ -88,7 +88,11 @@ class PowerDns::RecordsController < ApplicationController
 
   def load_domain
     @domain = if can?(:manage, :dns)
-                PowerDns::Domain.find params[:domain_id]
+                if params[:domain_id]
+                  PowerDns::Domain.find params[:domain_id]
+                else
+                  nil
+                end
               else
                 current_user.user_role_powerdns_domains.find_by(domain_id: params[:domain_id]).domain if params[:domain_id]
               end
@@ -98,6 +102,8 @@ class PowerDns::RecordsController < ApplicationController
 
   def scoped_records
     @records = @domain ? @domain.records : current_user.user_role_powerdns_records.map { |urr| urr.record }
+
+    @records = @records.order(:type, :name, :content)
   end
 
   def load_record
