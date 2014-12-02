@@ -1,5 +1,6 @@
 - if current_user.sysadmin?
-  = link_to fa('plus-square') + _("new"), new_domain_path, class: 'btn btn-success'
+  = link_to fa('plus-square') + _('new'), new_domain_path, class: 'btn btn-success'
+  = link_to fa('plus-square') + _('new RDNS Zone'), new_rdns_domains_path, class: 'btn btn-success'
 
 %table.table
   %thead

@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 #  namespace 'power_dns' do
   scope module: 'power_dns' do
     resources :domains do
+      collection do
+        get 'new_rdns', action: :new_rdns
+      end
       resources :records, only: [ :new, :create, :index ] do
         collection do
           get 'new/:type', action: :new, constraints: PowerDns::RecordTypesConstraint.new, as: :new

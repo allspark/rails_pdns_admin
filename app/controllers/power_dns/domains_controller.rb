@@ -11,6 +11,10 @@ class PowerDns::DomainsController < ApplicationController
                end
   end
 
+  def new_rdns
+
+  end
+
   def new
     @domain = PowerDns::Domain.new
     urd = @domain.user_role_powerdns_domains.build

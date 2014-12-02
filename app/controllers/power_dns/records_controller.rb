@@ -101,9 +101,7 @@ class PowerDns::RecordsController < ApplicationController
   end
 
   def scoped_records
-    @records = @domain ? @domain.records : current_user.user_role_powerdns_records.map { |urr| urr.record }
-
-    @records = @records.order(:type, :name, :content)
+    @records = @domain ? @domain.records.order(:type, :name, :content) : current_user.user_role_powerdns_records.map { |urr| urr.record }.sort { |a,b| a.name <=> b.name }
   end
 
   def load_record
