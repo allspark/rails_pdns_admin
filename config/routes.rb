@@ -15,7 +15,11 @@ class PowerDns::RecordTypesConstraint
 end
 
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+
+  devise_scope :user do
+    get 'toggle_admin', to: 'users/sessions#toggleadmin', as: 'toggle_admin'
+  end
 
 #  namespace 'power_dns' do
   scope module: 'power_dns' do

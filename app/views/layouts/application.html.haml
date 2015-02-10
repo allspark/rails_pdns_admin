@@ -16,6 +16,11 @@
         - if can?(:index, :token)
           = menu_item _('Tokens'), '#'
       = menu_group pull: :right do
+        - if can?(:toggle, :admin)
+          - if session[:adminview]
+            = menu_item _('disable admin view'), toggle_admin_path, class: 'btn btn-success'
+          - else
+            = menu_item _('enable admin view'), toggle_admin_path, class: 'btn btn-danger'
         = render 'devise/shared/login_items'
 
     .container-fluid

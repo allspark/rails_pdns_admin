@@ -6,9 +6,9 @@ class PowerDns::DomainsController < ApplicationController
   def index
     @domain = if can?(:manage, :dns)
                  PowerDns::Domain.all
-               else
-                 current_user.user_role_powerdns_domains.map(&:domain)
-               end
+              else
+                current_user.user_role_powerdns_domains.map(&:domain)
+              end
   end
 
   def new_rdns
