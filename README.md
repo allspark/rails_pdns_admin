@@ -16,6 +16,7 @@ Developed with Ruby Version 2.1.4 and MySQL 5.5
 ## features
 
 * normal record creation, update, ...
+* user-role, record/subdomain/domain per user
 
 ## Contact
 
