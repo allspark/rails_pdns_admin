@@ -17,7 +17,7 @@
 
 
 class PowerDns::RecordsController < ApplicationController
-  before_action :load_domain, only: [ :index, :new, :create ]
+  before_action :load_domain #, only: [ :index, :new, :create ]
   before_action :load_record, only: [ :edit, :update, :destroy, :toggle ]
   before_action :scoped_records, only: [ :index ]
   authorize_resource
@@ -67,7 +67,11 @@ class PowerDns::RecordsController < ApplicationController
     if @record.update_attributes safe_params
       flash[:success] = _('record updated')
 
-      redirect_to action: :index and return
+      if @domain.nil?
+      	redirect_to action: :index and return
+      else
+        redirect_to controller: :records, action: :index, domain_id: @domain.id
+      end
     else
       flash[:error] = _('record not updated')
 

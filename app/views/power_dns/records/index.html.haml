@@ -27,7 +27,7 @@
         %td
           = record.name
           - if can?(:edit, record)
-            = link_to fa_icon('pencil'), edit_record_path(record)
+            = link_to fa_icon('pencil'), edit_domain_record_path(@domain, record)
           - if can?(:delete, record)
             = link_to fa_icon('remove'), record_path(record), method: :delete, data: { confirm: _("Are you sure?") }
         %td= record.type
